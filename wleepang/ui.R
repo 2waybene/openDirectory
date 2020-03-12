@@ -7,6 +7,8 @@
 library(shiny)
 library('shinyDirectoryInput')
 
+
+
 shinyUI(fluidPage(
   fluidRow(
     column(1),
@@ -25,10 +27,13 @@ shinyUI(fluidPage(
       
       
  
-verbatimTextOutput("nText") , 
+      verbatimTextOutput("nText") , 
  
+      shinySaveButton("save", "Save file", "Save file as ...", filetype=list(xlsx="txt")),
+      
+      verbatimTextOutput('save',  placeholder = TRUE) ,
  
- sliderInput("obs", "Number of observations", 0, 1000, 500),
+ # sliderInput("obs", "Number of observations", 0, 1000, 500),
  
  
       actionButton("goButton", "Calculate",
@@ -41,7 +46,7 @@ verbatimTextOutput("nText") ,
  
   
       
- plotOutput("distPlot")
+ # plotOutput("distPlot")
       
      # tags$h5('Files'),
      #  dataTableOutput('files')

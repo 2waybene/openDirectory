@@ -5,8 +5,11 @@
 #
 library(shiny)
 
-shinyServer(function(input, output, session) {
 
+shinyServer(function(input, output, session) {
+  
+  vals <- reactiveValues()
+  
   observeEvent(
     ignoreNULL = TRUE,
     eventExpr = {
@@ -19,10 +22,12 @@ shinyServer(function(input, output, session) {
           caption="Choose a directory...")
         updateDirectoryInput(session, 'Without', value = withoutPath )
       }
-      
-    }
+    } 
   )
-
+  
+  output$Without = renderText({
+    readDirectoryInput(session, 'Without')
+  })
   
   observeEvent(
     ignoreNULL = TRUE,
@@ -36,52 +41,24 @@ shinyServer(function(input, output, session) {
                           caption="Choose a directory...")
         updateDirectoryInput(session, 'With', value = withPath )
       }
-      
-    }
+    } 
   )
   
-  # T-Score calculations tscores()
- # eventReactive(input$goButton,{ 
-#    print ("hello world")
- # })
-  
- # ntext <- eventReactive(input$goButton, {
-    #input$With
-  #  "hello world"
-#  })
-  
-  
-  
-#  output$nText <- renderText({
-#    ntext()
-   # "hello world"
- # })
-  
-  output$distPlot <- renderPlot({
-    # Take a dependency on input$goButton. This will run once initially,
-    # because the value changes from NULL to 0.
-    input$goButton
-    
-    # Use isolate() to avoid dependency on input$obs
-    dist <- isolate(rnorm(input$obs))
-    hist(dist)
-  })
-  
-  
-  output$Without = renderText({
-    readDirectoryInput(session, 'Without')
+ # results <- reactiveVal("")
+ 
+  output$With = renderText({
+    vals$With  = readDirectoryInput(session, 'With')
   })
 
-  
-  output$With = renderText({
-    readDirectoryInput(session, 'With')
+   
+  output$Without = renderText({
+    vals$Without = readDirectoryInput(session, 'Without')
   })
+  
   
   
   ntext <- eventReactive(input$goButton, {
-    #input$With
-    #"hello world"
-    paste ("hello world" , input$withPath, "second part", sep =" ")
+    paste ("hello world" ,  vals$W  , "second part", sep =" ")
   })
   
   
@@ -90,9 +67,6 @@ shinyServer(function(input, output, session) {
     # "hello world"
   })
   
-#  output$files = renderDataTable({
-#    files = list.files(readDirectoryInput(session, 'directory'), full.names = T)
-#    data.frame(name = basename(files), file.info(files))
-#  })
+
 
 })
