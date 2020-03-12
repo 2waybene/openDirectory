@@ -45,17 +45,17 @@ shinyServer(function(input, output, session) {
 #    print ("hello world")
  # })
   
-  ntext <- eventReactive(input$goButton, {
+ # ntext <- eventReactive(input$goButton, {
     #input$With
-    "hello world"
-  })
+  #  "hello world"
+#  })
   
   
   
-  output$nText <- renderText({
-    ntext()
+#  output$nText <- renderText({
+#    ntext()
    # "hello world"
-  })
+ # })
   
   output$distPlot <- renderPlot({
     # Take a dependency on input$goButton. This will run once initially,
@@ -80,12 +80,19 @@ shinyServer(function(input, output, session) {
   
   ntext <- eventReactive(input$goButton, {
     #input$With
-    paste ("hello world" , withPath, sep =" ")
+    #"hello world"
+    paste ("hello world" , input$withPath, "second part", sep =" ")
   })
   
-  output$files = renderDataTable({
-    files = list.files(readDirectoryInput(session, 'directory'), full.names = T)
-    data.frame(name = basename(files), file.info(files))
+  
+  output$nText <- renderText({
+    ntext()
+    # "hello world"
   })
+  
+#  output$files = renderDataTable({
+#    files = list.files(readDirectoryInput(session, 'directory'), full.names = T)
+#    data.frame(name = basename(files), file.info(files))
+#  })
 
 })
