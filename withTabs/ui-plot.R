@@ -1,0 +1,3 @@
+
+
+tabPanel("Plot", plotOutput("plot"))

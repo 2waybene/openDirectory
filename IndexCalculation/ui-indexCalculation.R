@@ -7,6 +7,7 @@ tabPanel("IndexCalculation",
                     #  tags$div(tags$label("EliminationWithoutReplacement directory")),
                     #  tags$div(tags$label("Choose folder", class="btn btn-primary",
                      #                     tags$input(id = "Without", webkitdirectory = TRUE, type = "file", style="display: none;", onchange="pressed()"))),
+                    
                        tags$div(directoryInput('Without', label = 'EliminationWithoutReplacement', value = '~')),
                        verbatimTextOutput("Without", placeholder = TRUE) ,
                     
