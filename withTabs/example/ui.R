@@ -34,8 +34,8 @@ ui <- fluidPage(
       
       # Output: Tabset w/ plot, summary, and table ----
       tabsetPanel(type = "tabs",
-                 # tabPanel("Plot", plotOutput("plot")),
-                 source("ui-plot.R",local=TRUE),
+                  tabPanel("Plot", plotOutput("plot")),
+                 #source("ui-plot.R",local=TRUE),
                   tabPanel("Summary", verbatimTextOutput("summary")),
                   tabPanel("Table", tableOutput("table"))
       )

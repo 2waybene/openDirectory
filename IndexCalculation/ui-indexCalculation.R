@@ -1,40 +1,37 @@
 
 tabPanel("IndexCalculation",
-         fluidRow(
-           
-           wellPanel(
-             tags$div(class="form-group shiny-input-container", 
-                    #  tags$div(tags$label("EliminationWithoutReplacement directory")),
-                    #  tags$div(tags$label("Choose folder", class="btn btn-primary",
-                     #                     tags$input(id = "Without", webkitdirectory = TRUE, type = "file", style="display: none;", onchange="pressed()"))),
+     fluidRow(
+         wellPanel(
+         tags$div(class="form-group shiny-input-container", 
+    #  tags$div(tags$label("EliminationWithoutReplacement directory")),
+    #  tags$div(tags$label("Choose folder", class="btn btn-primary",
+    #  tags$input(id = "Without", webkitdirectory = TRUE, type = "file", style="display: none;", onchange="pressed()"))),
+       
+          tags$div(directoryInput('Without', label = 'EliminationWithoutReplacement', value = '~')),
+          verbatimTextOutput("Without", placeholder = TRUE) ,
                     
-                       tags$div(directoryInput('Without', label = 'EliminationWithoutReplacement', value = '~')),
-                       verbatimTextOutput("Without", placeholder = TRUE) ,
-                    
-                     # tags$div(tags$label("EliminationWithReplacement directory")),
-                      #tags$div(tags$label("Choose folder", class="btn btn-primary",
-                      #                  tags$input(id = "With", webkitdirectory = TRUE, type = "file", style="display: none;", onchange="pressed()"))),
+    # tags$div(tags$label("EliminationWithReplacement directory")),
+    # tags$div(tags$label("Choose folder", class="btn btn-primary",
+    # tags$input(id = "With", webkitdirectory = TRUE, type = "file", style="display: none;", onchange="pressed()"))),
+                
+          directoryInput('With',    label = 'EliminationWithReplacement', value = '~') ,
+          verbatimTextOutput("With", placeholder = TRUE) ,
                       
-                      directoryInput('With',    label = 'EliminationWithReplacement', value = '~') ,
-                      verbatimTextOutput("With", placeholder = TRUE) ,
-                      
-                      shinySaveButton("save", "Save file", "Save file as ...", filetype=list(xlsx="txt")),
+          shinySaveButton("save", "Save file", "Save file as ...", filetype=list(xlsx="txt")),
+            
+    # tags$label("No folder choosen", id = "noFile"),
+          tags$div(id="fileIn_progress", class="progress progress-striped active shiny-file-input-progress",
+                        tags$div(class="progress-bar")),
                     
-                #      tags$label("No folder choosen", id = "noFile"),
-                      tags$div(id="fileIn_progress", class="progress progress-striped active shiny-file-input-progress",
-                               tags$div(class="progress-bar")
-                      ),
-                    
-                      actionButton("goButton2", "Calculate",
-                                 style="font-weight: bold;color: #000000; background-color: #00FF08; border-color: #aea79f"), # Go button
+          actionButton("goButton2", "Calculate",
+          style="font-weight: bold;color: #000000; background-color: #00FF08; border-color: #aea79f"), # Go button
                     # div(style="display: inline-block;vertical-align:top; width: 30px;",HTML("<br>")),
                     
-                      htmlOutput("foo") # All files created display
-             ),
-             verbatimTextOutput("results")
-           )
-
-         )
+          htmlOutput("foo") # All files created display
+     ),
+     verbatimTextOutput("results")
+   )
+  )
 )
 
 

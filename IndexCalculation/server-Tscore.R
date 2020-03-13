@@ -26,7 +26,8 @@ output$Sig <- renderDataTable({
   Signatures <- as.data.frame(Signatures)
   globalValues$VanillaSig <- Signatures
   datatable(Signatures,rownames = FALSE,
-            options = list(scroller = TRUE,scrollX = T,paging=FALSE,dom='t'))  # options = list(pageLength = -1,dom = 't') 
+      options = list(scroller = TRUE,scrollX = T,paging=FALSE,dom='t'))
+    # options = list(pageLength = -1,dom = 't') 
 })
 
 # Array file table display
@@ -36,7 +37,9 @@ output$Array <- renderDataTable({
   HumanArray <- as.data.frame(HumanArray)
   globalValues$VanillaArray <- HumanArray
   datatable(HumanArray,rownames = FALSE,
-            options = list(scroller = TRUE,scrollX = T,paging=TRUE,pageLength =5,bLengthChange=0, bFilter=0))  # options = list(pageLength = -1,dom = 't') 
+      options = list(scroller = TRUE,scrollX = T,
+      paging=TRUE,pageLength =5,bLengthChange=0, bFilter=0))
+     # options = list(pageLength = -1,dom = 't') 
 })
 
 
@@ -49,7 +52,8 @@ tscores <- eventReactive(input$goButton,{
   
   Signatures <- as.data.frame(globalValues$VanillaSig) 
   HumanArray <- as.data.frame(globalValues$VanillaArray)
-  HumanArray[3:ncol(HumanArray)] <- t(apply(HumanArray[3:ncol(HumanArray)],1,function(y)y-median(y))) #Normalize
+  HumanArray[3:ncol(HumanArray)] <- 
+    t(apply(HumanArray[3:ncol(HumanArray)],1,function(y)y-median(y))) #Normalize
 
 
   # Look for row gene duplicates in array, keep only the one with highest stdv

@@ -8,15 +8,34 @@
 # Load T-Scores data
 load ("dataSEM/new_t_scores_w_lev_03272019.rda")
 
+# Number of bootstrap runs (ex: 1000)
+bootnum <- reactive({  
+  input$Without
+})
+bootChoice <- reactive({  
+  input$With
+})
+
+
+
+
+
+print(bootnum)
+
 
 vals <- reactiveValues()
 
+
 observeEvent(
+  
   ignoreNULL = TRUE,
   eventExpr = {
     input$Without
+   # bootnum()
+    print (input$Without)
   },
   handlerExpr = {
+    print (input$Without)
     if (input$Without > 0) {
       # condition prevents handler execution on initial app launch
       withoutPath = choose.dir(default = readDirectoryInput(session, 'Without'),
@@ -34,6 +53,7 @@ observeEvent(
   ignoreNULL = TRUE,
   eventExpr = {
     input$With
+   # bootChoice ()
   },
   handlerExpr = {
     if (input$With > 0) {
@@ -45,18 +65,13 @@ observeEvent(
   } 
 )
 
-# results <- reactiveVal("")
-
 output$With = renderText({
   vals$With  = readDirectoryInput(session, 'With')
 })
 
-
 output$Without = renderText({
   vals$Without = readDirectoryInput(session, 'Without')
 })
-
-
 
 ntext <- eventReactive(input$goButton, {
   paste ("hello world" ,  vals$W  , "second part", sep =" ")
@@ -67,4 +82,3 @@ output$nText <- renderText({
   ntext()
   # "hello world"
 })
-

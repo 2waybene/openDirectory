@@ -29,7 +29,7 @@ shinyUI(fluidPage(
  
       verbatimTextOutput("nText") , 
  
-      shinySaveButton("save", "Save file", "Save file as ...", filetype=list(xlsx="txt")),
+    #  shinySaveButton("save", "Save file", "Save file as ...", filetype=list(xlsx="txt")),
       
       verbatimTextOutput('save',  placeholder = TRUE) ,
  
