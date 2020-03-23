@@ -1,0 +1,21 @@
+library(shiny)
+library(DT)
+library(readxl)
+library(tidyr)
+library(stringr)
+library(shinycssloaders)
+library(markdown)
+library(parallel)
+library(foreach)
+library(doParallel)
+library(bigstatsr)
+library(tools)
+library(lavaan)
+library(png)
+# setwd("/ddn/gs1/tools/shinyserver/apps/ibsip2019/SignatureAnalysis")  ######
+if (nrow(showConnections()) > 38) {
+	pskill(Sys.getpid(), signal = SIGTERM)
+}
+# library(shinythemes)
+# library(shinyWidgets)
+Reference <- read_excel("Reference.xlsx")

@@ -1,0 +1,14 @@
+options(warn=-1)
+options(shiny.maxRequestSize=300*1024^2)
+source("helpers.R")
+function(input, output) {
+  globalValues <- reactiveValues(
+  MasterSig=data.frame(),
+  MasterArray=data.frame(),
+  directory=character()
+  )
+  #globalValues$directory=getwd()
+  source("server-Tscore.R",local = TRUE)
+  source("server-bootstrap.R",local = TRUE)
+  
+}

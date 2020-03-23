@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559839953464.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2775952121",
+    "id" : "B4BE67D2",
+    "lastKnownWriteTime" : 1559920912,
+    "last_content_update" : 1559920912282,
+    "path" : "C:/Users/dayk2/Desktop/Test/Test/server-bootstrap.R",
+    "project_path" : "server-bootstrap.R",
+    "properties" : {
+        "cursorPosition" : "32,2",
+        "scrollLine" : "14",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

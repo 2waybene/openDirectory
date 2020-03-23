@@ -1,0 +1,137 @@
+bootnum <- reactive({
+  input$bootnum
+})
+
+values <- reactiveValues(
+  a = vector()
+)
+
+fs <- reactive({
+  req(inFileSS <- input$fileSubset)
+  withProgress(message = 'Calculating T-Scores',value=0,{
+  subset <- read_excel(inFileSS$datapath)
+  subset <- as.data.frame(subset)
+  
+  req(MasterSig <- globalValues$MasterSig)
+  colnames(MasterSig)[1] <- "Gene"
+  req(MasterArray <- globalValues$MasterArray)
+  colnames(MasterArray)[1]<-"Gene"
+  req(inFileS <- input$fileSignature)
+  req(inFileA <- input$fileArray)
+  # MasterSig <- read_excel(inFileS$datapath)
+  # MasterArray <- read_excel(inFileA$datapath)
+  # MasterSig <- as.data.frame(MasterSig)
+  # MasterArray <- as.data.frame(MasterArray)
+  
+  colnames(MasterSig)[1] <- "Gene"
+  colnames(MasterArray)[1]<-"Gene"
+  
+  
+  files <- c()
+  tmpdir <- tempdir()
+  setwd(tempdir())
+  print(getwd())
+  
+  
+  
+  for (reg in 1:nrow(subset)){
+    incProgress(1/nrow(subset))
+    
+    cName <- subset[reg,1]
+    stringVec <- unlist(strsplit(subset[reg,5], ","))
+    Removed <- MasterSig[!MasterSig$Gene %in% stringVec,]
+    
+    TScores1 <- matrix(0,nrow=1,ncol=length(MasterArray)-2)
+    
+    a <-Removed[!duplicated(Removed[,1]),]
+    colnames(a)[1]<-"Human"
+    a$Human[a$Human == "?"] <- NA
+    a<-na.omit(a)
+    a<-a[order(a$Human),]
+    
+    a$Human <- toupper(a$Human)
+    MasterArray$Gene <- toupper(MasterArray$Gene)
+    
+    overlap <- intersect(a$Human,MasterArray$Gene)
+    a <- a[a$Human %in% overlap,] # get rid of non-overlaps
+    ArrayDummy <- MasterArray[MasterArray$Gene %in% overlap,]
+    ArrayDummy<-ArrayDummy[order(ArrayDummy$Gene),]
+    
+    final <- merge(a, ArrayDummy, by.x="Human", by.y="Gene")
+    final[4:length(final)] <- lapply(final[4:length(final)], as.numeric)
+    
+    HighLow <- split(final, final$Signature)
+    High <- HighLow$High
+    Low <- HighLow$Low
+    
+    for(j in 1:ncol(TScores1)){
+      TScores1[1,j]<- t.test(High[j+3],Low[j+3], alternative="two.sided", paired =FALSE, var.equal=TRUE)$statistic
+    }
+    colnames(TScores1) <- colnames(final)[4:ncol(final)]
+    filePath <- paste0(cName,".csv")
+    files <-c(files,filePath)
+    write.csv(TScores1,filePath,row.names=F)
+    
+    
+    
+    targetNumber <- length(stringVec)
+    TScores <- matrix(0,nrow=bootnum(),ncol=length(MasterArray)-1)
+    for(i in 1:nrow(TScores)){
+      TScores[i,1] <- paste0("Random_",cName,"_",targetNumber,"_",str_pad(i, 4, pad = "0")) #Random_34_0001
+      
+      set.seed(1+i*100+reg)
+      eliminateRandoms <- sample.int(nrow(MasterSig),targetNumber)
+      
+      subSet <- MasterSig[-eliminateRandoms,] 
+      
+      
+      a <-subSet[!duplicated(subSet[,1]),] 
+      colnames(a)[1]<-"Human"
+      a$Human[a$Human == "?"] <- NA
+      a<-na.omit(a)
+      a<-a[order(a$Human),]
+      
+      a$Human <- toupper(a$Human)
+      MasterArray$Gene <- toupper(MasterArray$Gene)
+      
+      overlap <- intersect(a$Human,MasterArray$Gene) 
+      a <- a[a$Human %in% overlap,] # get rid of non-overlaps
+      ArrayDummy <- MasterArray[MasterArray$Gene %in% overlap,]
+      ArrayDummy<-ArrayDummy[order(ArrayDummy$Gene),]
+      
+      final <- merge(a, ArrayDummy, by.x="Human", by.y="Gene")
+      final[4:length(final)] <- lapply(final[4:length(final)], as.numeric) 
+      
+      HighLow <- split(final, final$Signature)
+      High <- HighLow$High
+      Low <- HighLow$Low
+      
+      for(j in 1:(ncol(TScores)-1)){
+        TScores[i,j+1]<- t.test(High[j+3],Low[j+3], alternative="two.sided", paired =FALSE, var.equal=TRUE)$statistic
+      }
+      
+    }
+    
+    colnames(TScores)[2:ncol(TScores)] <- colnames(final)[4:ncol(final)]
+    colnames(TScores)[1] <- "Run"
+    filePath <- paste0("Random_",cName,"_",targetNumber,".csv")
+    files <-c(files,filePath)
+    write.csv(TScores,filePath,row.names=F)
+    
+  }
+  values$a <- files
+  })
+  files
+})
+
+
+output$bootdownload <- downloadHandler(
+  filename = function() {
+    paste("output", "zip", sep=".")
+  },
+  content = function(fname){
+    zip(zipfile=fname,files=fs())
+  }
+  ,
+  contentType = "application/zip"
+)

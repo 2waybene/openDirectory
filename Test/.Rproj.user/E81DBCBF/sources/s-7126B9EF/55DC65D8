@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559849987446.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "55DC65D8",
+    "lastKnownWriteTime" : 1559850839,
+    "last_content_update" : 1559850839730,
+    "path" : "C:/Users/dayk2/Desktop/Bootstrap/Random Bootstrap Shiny.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "94,41",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 9,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

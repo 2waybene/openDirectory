@@ -1,0 +1,24 @@
+options(warn=-1)
+source("helpers.R")
+
+fluidPage(
+  titlePanel("Signature Analysis"),
+  mainPanel(
+    div(style="display: inline-block;vertical-align:top; width: 150px;",fileInput("fileSignature","Upload the signature file")),
+    div(style="display: inline-block;vertical-align:top; width: 20px;",HTML("<br>")),
+    div(style="display: inline-block;vertical-align:top; width: 100px;",radioButtons("radioGene", label="Gene Type",choices = list("Mouse" = 1, "Human" = 2),selected = 1)),
+    div(style="display: inline-block;vertical-align:top; width: 35px;",HTML("<br>")),
+    div(style="display: inline-block;vertical-align:top; width: 150px;",fileInput("fileArray","Upload the human microarray file")),
+    div(style="display: inline-block;vertical-align:top; width: 20px;",HTML("<br>")),
+    div(style="display: inline-block;vertical-align:top; width: 180px;",radioButtons("radioNormal", label="Normalize (median-shift)",choices = list("Already normalized" = 1, "Normalize data" = 2),selected = 1)),
+
+    tabsetPanel(
+      
+      source("ui-Tscore.R",local=TRUE)$value,
+      source("ui-bootstrap.R",local=TRUE)$value,
+      source("ui-example.R",local=TRUE)$value
+      
+    )
+  ) #end navbarpage
+) #end taglist
+

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1559839969718.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "47EB5180",
+    "lastKnownWriteTime" : 1559917604,
+    "last_content_update" : 1559917604704,
+    "path" : "C:/Users/dayk2/Desktop/Test/Test/server-Tscore.R",
+    "project_path" : "server-Tscore.R",
+    "properties" : {
+        "cursorPosition" : "106,14",
+        "scrollLine" : "78",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

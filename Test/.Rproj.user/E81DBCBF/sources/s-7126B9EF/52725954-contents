@@ -1,0 +1,17 @@
+tabPanel("Bootstrap",
+         fluidRow(
+           column(4,wellPanel(
+             fileInput("fileSubset","Upload the subset file")
+           ) 
+           ),
+           column(4,wellPanel(
+             numericInput("bootNum","Enter number of random bootstraps",value=1000)
+           )
+           )
+           ,
+           column(4,wellPanel(
+             downloadButton("bootdownload", "Download Zip")
+           )
+           )
+         )
+)
